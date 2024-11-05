@@ -27,8 +27,8 @@ class CategoryController extends Controller
         $data = $request->all();
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $name = 'categories/' .  Str::uuid() . '.' . $file->extension();
-            $file->storePubliclyAs('public', $name);
+            $name = Str::uuid() . '.' . $file->extension();
+            $file->storeAs('categories', $name,'public');
             $data['photo'] = $name;
         }
 
@@ -40,7 +40,6 @@ class CategoryController extends Controller
     public function update(Category $category, StoreCategoryRequest $request)
     {
         $category->update($request->all());
-
         return new CategoryResource($category);
     }
 
